@@ -1,0 +1,311 @@
+/* university.css - University branding and professional styles */
+
+:root {
+    --bru-blue: #1a365d;
+    --bru-gold: #d4af37;
+    --bru-light-blue: #2d3748;
+    --bru-light-gray: #f7fafc;
+}
+
+/* University Header Styles */
+.university-header {
+    background: linear-gradient(135deg, var(--bru-blue), var(--bru-light-blue));
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.university-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23d4af37" stroke-width="0.5" opacity="0.1"/></svg>');
+    pointer-events: none;
+}
+
+.university-logo-container {
+    position: relative;
+    z-index: 1;
+}
+
+.university-logo {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    background: white;
+    border-radius: 50%;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 3px solid var(--bru-gold);
+}
+
+.university-title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.university-subtitle {
+    font-size: 1.5rem;
+    color: var(--bru-gold);
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+/* Department Badge */
+.department-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Academic Card Styles */
+.academic-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--bru-gold);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.academic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.academic-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: var(--bru-blue);
+}
+
+.academic-card-header i {
+    font-size: 2rem;
+    color: var(--bru-gold);
+}
+
+/* Team Member Cards */
+.team-member-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.team-member-card:hover {
+    border-color: var(--bru-gold);
+    transform: translateY(-5px);
+}
+
+.member-avatar {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--bru-blue), var(--bru-light-blue));
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    border: 3px solid var(--bru-gold);
+}
+
+.member-role {
+    color: var(--bru-gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Feature Showcase */
+.feature-showcase-item {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    text-align: center;
+    height: 100%;
+    border-top: 4px solid var(--bru-gold);
+}
+
+.feature-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--bru-blue), var(--bru-light-blue));
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
+}
+
+/* System Status Panel */
+.system-status-panel {
+    background: linear-gradient(135deg, var(--bru-blue), var(--bru-light-blue));
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 30px 0;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.status-indicator.online::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-indicator.offline::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #e74c3c;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* University Footer */
+.university-footer {
+    background: var(--bru-blue);
+    color: white;
+    padding: 40px 0 20px;
+    margin-top: 50px;
+}
+
+.footer-section-title {
+    color: var(--bru-gold);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--bru-gold);
+}
+
+.copyright-bar {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+    margin-top: 30px;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+}
+
+/* Project Documentation Styles */
+.documentation-section {
+    background: var(--bru-light-gray);
+    padding: 40px;
+    border-radius: 15px;
+    margin: 40px 0;
+}
+
+.requirement-list {
+    list-style: none;
+    padding: 0;
+}
+
+.requirement-list li {
+    padding: 15px;
+    background: white;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid var(--bru-gold);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.requirement-list i {
+    color: var(--bru-gold);
+    font-size: 1.2rem;
+}
+
+/* Technology Stack Badges */
+.tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: white;
+    border-radius: 20px;
+    margin: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .university-title {
+        font-size: 2rem;
+    }
+    
+    .university-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .academic-card {
+        padding: 20px;
+    }
+    
+    .team-member-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .university-logo {
+        width: 120px;
+        height: 120px;
+        padding: 20px;
+    }
+    
+    .member-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+}

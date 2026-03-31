@@ -1,0 +1,699 @@
+<!-- pages/register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Borana University DLMS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .register-container {
+            min-height: 100vh;
+            background: linear-gradient(rgba(26, 54, 93, 0.9), rgba(26, 54, 93, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a365d"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23d4af37" stroke-width="1" opacity="0.1"/></svg>');
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .register-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .register-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .university-badge {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+        
+        .register-body {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .register-body {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .role-option {
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .role-option:hover {
+            border-color: var(--secondary-color);
+            background: #fffdf0;
+        }
+        
+        .role-option.selected {
+            border-color: var(--secondary-color);
+            background: var(--secondary-color);
+            color: #000;
+            font-weight: 600;
+        }
+        
+        .role-option i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .form-navigation {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .password-strength {
+            height: 5px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-weak { background: #e74c3c; width: 33%; }
+        .strength-medium { background: #f39c12; width: 66%; }
+        .strength-strong { background: #2ecc71; width: 100%; }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .terms-checkbox input {
+            margin-top: 3px;
+        }
+        
+        .terms-checkbox label {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+        }
+    </style>
+</head>
+<body>
+    <!-- Register Container -->
+    <main class="register-container">
+        <div class="register-card">
+            <!-- Header -->
+            <div class="register-header">
+                <div class="university-badge">
+                    <i class="fas fa-university"></i>
+                </div>
+                <h1>Borana University</h1>
+                <p>Digital Library Management System - User Registration</p>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px;">
+                    College of Engineering and Technology
+                </p>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="register-body">
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-user"></i> Personal Information
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="firstName">
+                            <i class="fas fa-user"></i> First Name *
+                        </label>
+                        <input type="text" id="firstName" required>
+                        <small class="error-message" id="firstNameError"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">
+                            <i class="fas fa-user"></i> Last Name *
+                        </label>
+                        <input type="text" id="lastName" required>
+                        <small class="error-message" id="lastNameError"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i> Email Address *
+                        </label>
+                        <input type="email" id="email" required placeholder="name@example.com">
+                        <small class="error-message" id="emailError"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i> Phone Number
+                        </label>
+                        <input type="tel" id="phone" placeholder="+251 9xx xxx xxx">
+                        <small class="error-message" id="phoneError"></small>
+                    </div>
+                </div>
+
+                <!-- Academic & Account Information -->
+                <div class="form-section">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-graduation-cap"></i> Academic & Account
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="universityId">
+                            <i class="fas fa-id-card"></i> University ID *
+                        </label>
+                        <input type="text" id="universityId" required placeholder="BRU/R/xxx/16">
+                        <small class="error-message" id="universityIdError"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-user-tag"></i> Account Type *
+                        </label>
+                        <div class="role-selector">
+                            <div class="role-option selected" data-role="student">
+                                <i class="fas fa-user-graduate"></i>
+                                Student
+                            </div>
+                            <div class="role-option" data-role="staff">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                Staff
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="departmentGroup">
+                        <label for="department">
+                            <i class="fas fa-building"></i> Department *
+                        </label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Software Engineering">Software Engineering</option>
+                            <option value="Electrical Engineering">Electrical Engineering</option>
+                            <option value="Civil Engineering">Civil Engineering</option>
+                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                            <option value="Business Administration">Business Administration</option>
+                            <option value="Accounting">Accounting</option>
+                            <option value="Economics">Economics</option>
+                        </select>
+                        <small class="error-message" id="departmentError"></small>
+                    </div>
+                    
+                    <div class="form-group" id="yearGroup">
+                        <label for="year">
+                            <i class="fas fa-calendar-alt"></i> Year *
+                        </label>
+                        <select id="year" required>
+                            <option value="">Select Year</option>
+                            <option value="1">Year 1</option>
+                            <option value="2">Year 2</option>
+                            <option value="3">Year 3</option>
+                            <option value="4">Year 4</option>
+                            <option value="5">Year 5</option>
+                        </select>
+                        <small class="error-message" id="yearError"></small>
+                    </div>
+                </div>
+
+                <!-- Password Section -->
+                <div class="form-section" style="grid-column: 1 / -1;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-lock"></i> Security Information
+                    </h3>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-key"></i> Password *
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="password" required minlength="6">
+                                <button type="button" class="password-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-bar" id="strengthBar"></div>
+                            </div>
+                            <small class="hint">Minimum 6 characters with letters and numbers</small>
+                            <small class="error-message" id="passwordError"></small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">
+                                <i class="fas fa-key"></i> Confirm Password *
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="confirmPassword" required minlength="6">
+                                <button type="button" class="password-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small class="error-message" id="confirmPasswordError"></small>
+                        </div>
+                    </div>
+                    
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            I agree to the <a href="#" style="color: var(--primary-color);">Terms of Service</a> and 
+                            <a href="#" style="color: var(--primary-color);">Privacy Policy</a>. I understand that 
+                            my account will be verified by the university administration.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- System Information -->
+                <div class="info-box" style="grid-column: 1 / -1;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+                        <i class="fas fa-info-circle"></i> Registration Information
+                    </h4>
+                    <p style="font-size: 0.95rem; color: var(--gray-text);">
+                        • Your account will be activated within 24 hours after verification.<br>
+                        • Use your university email (@bru.edu.et) for official correspondence.<br>
+                        • Keep your University ID ready for verification.<br>
+                        • You'll receive a confirmation email upon successful registration.
+                    </p>
+                </div>
+
+                <!-- Form Navigation -->
+                <div class="form-navigation">
+                    <div>
+                        <a href="../index.html" style="color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-arrow-left"></i> Back to Home
+                        </a>
+                        <a href="login.html" style="color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 8px; margin-top: 5px;">
+                            <i class="fas fa-sign-in-alt"></i> Already have an account?
+                        </a>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <button type="button" id="clearBtn" class="btn-secondary">
+                            <i class="fas fa-eraser"></i> Clear Form
+                        </button>
+                        <button type="button" id="registerBtn" class="btn-primary">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="background: #f8f9fa; padding: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div style="text-align: left;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                            <i class="fas fa-server"></i> System Version: 1.0.0
+                        </p>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                            Need help? Contact: <strong>admissions@borana.edu.et</strong>
+                        </p>
+                    </div>
+                    
+                    <div style="text-align: right;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                            &copy; <span id="currentYear"></span> Borana University
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Registration Success Modal -->
+    <div class="modal" id="successModal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-check-circle"></i> Registration Successful!</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <div style="font-size: 4rem; color: #2ecc71; margin: 20px 0;">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">Welcome to Borana University DLMS</h3>
+                <p style="margin-bottom: 20px; color: var(--gray-text);">
+                    Your account has been created successfully. Please check your email for verification instructions.
+                    Your account will be activated within 24 hours after administrative verification.
+                </p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 5px 0; font-weight: 600;">What's next?</p>
+                    <ul style="text-align: left; margin: 10px 0; padding-left: 20px;">
+                        <li>Check your email for confirmation</li>
+                        <li>Complete your profile after login</li>
+                        <li>Explore available resources</li>
+                        <li>Contact library for any assistance</li>
+                    </ul>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px;">
+                    <button onclick="window.location.href='login.html'" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Go to Login
+                    </button>
+                    <button onclick="window.location.href='../index.html'" class="btn-secondary">
+                        <i class="fas fa-home"></i> Return Home
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Role selection
+        let selectedRole = 'student';
+        
+        document.querySelectorAll('.role-option').forEach(option => {
+            option.addEventListener('click', function() {
+                selectedRole = this.dataset.role;
+                
+                // Update UI
+                document.querySelectorAll('.role-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                
+                // Update form based on role
+                updateFormForRole();
+            });
+        });
+        
+        function updateFormForRole() {
+            const yearGroup = document.getElementById('yearGroup');
+            const departmentGroup = document.getElementById('departmentGroup');
+            
+            if (selectedRole === 'staff') {
+                // For staff, year is optional
+                if (yearGroup) {
+                    yearGroup.style.display = 'none';
+                    document.getElementById('year').required = false;
+                }
+                
+                // Update department label for staff
+                if (departmentGroup) {
+                    const label = departmentGroup.querySelector('label');
+                    if (label) {
+                        label.innerHTML = '<i class="fas fa-building"></i> Department/Office *';
+                    }
+                }
+            } else {
+                // For students, year is required
+                if (yearGroup) {
+                    yearGroup.style.display = 'block';
+                    document.getElementById('year').required = true;
+                }
+                
+                // Reset department label
+                if (departmentGroup) {
+                    const label = departmentGroup.querySelector('label');
+                    if (label) {
+                        label.innerHTML = '<i class="fas fa-building"></i> Department *';
+                    }
+                }
+            }
+        }
+        
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('strengthBar');
+            
+            // Calculate strength
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+            
+            // Update strength bar
+            strengthBar.className = 'strength-bar';
+            if (password.length === 0) {
+                strengthBar.style.width = '0%';
+            } else if (strength < 2) {
+                strengthBar.classList.add('strength-weak');
+            } else if (strength < 4) {
+                strengthBar.classList.add('strength-medium');
+            } else {
+                strengthBar.classList.add('strength-strong');
+            }
+        });
+        
+        // Password toggle visibility
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                } else {
+                    input.type = 'password';
+                    icon.className = 'fas fa-eye';
+                }
+            });
+        });
+        
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            const errors = {};
+            
+            // Clear previous errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.textContent = '';
+            });
+            
+            // Validate required fields
+            const requiredFields = ['firstName', 'lastName', 'email', 'universityId', 'password', 'confirmPassword'];
+            if (selectedRole === 'student') requiredFields.push('department', 'year');
+            if (selectedRole === 'staff') requiredFields.push('department');
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    errors[fieldId] = 'This field is required';
+                    isValid = false;
+                }
+            });
+            
+            // Email validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email && !emailRegex.test(email)) {
+                errors.email = 'Please enter a valid email address';
+                isValid = false;
+            }
+            
+            // University ID format validation (BRU/R/xxx/16)
+            const universityId = document.getElementById('universityId').value.toUpperCase();
+            const idRegex = /^BRU\/R\/\d{3}\/16$/;
+            if (universityId && !idRegex.test(universityId)) {
+                errors.universityId = 'Format: BRU/R/xxx/16 (e.g., BRU/R/123/16)';
+                isValid = false;
+            }
+            
+            // Password validation
+            const password = document.getElementById('password').value;
+            if (password && password.length < 6) {
+                errors.password = 'Password must be at least 6 characters';
+                isValid = false;
+            }
+            
+            // Password match validation
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password && confirmPassword && password !== confirmPassword) {
+                errors.confirmPassword = 'Passwords do not match';
+                isValid = false;
+            }
+            
+            // Terms agreement
+            if (!document.getElementById('terms').checked) {
+                alert('You must agree to the Terms of Service and Privacy Policy');
+                isValid = false;
+            }
+            
+            // Display errors
+            Object.keys(errors).forEach(fieldId => {
+                const errorElement = document.getElementById(fieldId + 'Error');
+                if (errorElement) {
+                    errorElement.textContent = errors[fieldId];
+                }
+            });
+            
+            return isValid;
+        }
+        
+        // Register button handler
+        document.getElementById('registerBtn').addEventListener('click', async function() {
+            if (!validateForm()) {
+                return;
+            }
+            
+            const registerBtn = this;
+            const originalText = registerBtn.innerHTML;
+            
+            // Disable button and show loading
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            try {
+                // Prepare registration data
+                const formData = {
+                    first_name: document.getElementById('firstName').value.trim(),
+                    last_name: document.getElementById('lastName').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    university_id: document.getElementById('universityId').value.toUpperCase().trim(),
+                    password: document.getElementById('password').value,
+                    role: selectedRole === 'staff' ? 'librarian' : 'student',
+                    phone: document.getElementById('phone').value.trim() || null,
+                    department: document.getElementById('department').value,
+                    year: selectedRole === 'student' ? parseInt(document.getElementById('year').value) : null
+                };
+                
+                console.log('Registering with data:', formData);
+                
+                // Call registration API
+                const response = await window.dlmsAPI.register(formData);
+                
+                if (response && response.message) {
+                    // Show success modal
+                    document.getElementById('successModal').style.display = 'flex';
+                    
+                    // Clear form
+                    document.getElementById('clearBtn').click();
+                    
+                    // Log registration for debugging
+                    console.log('Registration successful:', response);
+                } else {
+                    throw new Error('Registration failed - no response from server');
+                }
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                
+                let errorMessage = 'Registration failed. ';
+                
+                if (error.message.includes('User already exists')) {
+                    errorMessage = 'Email already registered. Please use a different email or login.';
+                } else if (error.message.includes('University ID already registered')) {
+                    errorMessage = 'University ID already registered. Please check your ID or contact administration.';
+                } else if (error.message.includes('Network')) {
+                    errorMessage = 'Network error. Please check your internet connection and try again.';
+                } else {
+                    errorMessage += error.message || 'Please try again.';
+                }
+                
+                alert(errorMessage);
+            } finally {
+                // Re-enable button
+                registerBtn.disabled = false;
+                registerBtn.innerHTML = originalText;
+            }
+        });
+        
+        // Clear form button
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            if (confirm('Clear all form fields?')) {
+                document.querySelectorAll('input, select').forEach(element => {
+                    if (element.type !== 'checkbox') {
+                        element.value = '';
+                    }
+                });
+                document.getElementById('terms').checked = false;
+                
+                // Reset role to student
+                selectedRole = 'student';
+                document.querySelectorAll('.role-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    if (opt.dataset.role === 'student') {
+                        opt.classList.add('selected');
+                    }
+                });
+                updateFormForRole();
+                
+                // Clear errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.textContent = '';
+                });
+                
+                // Reset strength bar
+                document.getElementById('strengthBar').style.width = '0%';
+                document.getElementById('strengthBar').className = 'strength-bar';
+            }
+        });
+        
+        // Enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                document.getElementById('registerBtn').click();
+            }
+        });
+        
+        // Initialize form
+        updateFormForRole();
+    </script>
+</body>
+</html>

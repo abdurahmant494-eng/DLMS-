@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - DLMS | Borana University</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-book"></i>
+                <span>BRU DLMS</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="books.html" class="nav-link"><i class="fas fa-book-open"></i> Books</a>
+                <a href="users.html" class="nav-link"><i class="fas fa-users"></i> Users</a>
+                <a href="incidents.html" class="nav-link"><i class="fas fa-exclamation-triangle"></i> Incidents</a>
+                <a href="loans.html" class="nav-link"><i class="fas fa-exchange-alt"></i> Loans</a>
+                <div class="user-profile">
+                    <span id="userName">Welcome</span>
+                    <button id="logoutBtn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <main class="profile-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+            <p>Manage your personal information and account settings</p>
+        </div>
+
+        <div class="profile-content">
+            <!-- Left Sidebar -->
+            <div class="profile-sidebar">
+                <div class="user-card">
+                    <div class="user-avatar" id="userAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 id="userFullName">Loading...</h2>
+                    <p class="user-role" id="userRole">Loading...</p>
+                    <p class="user-id" id="userId">Loading...</p>
+                    
+                    <div class="user-stats">
+                        <div class="stat">
+                            <i class="fas fa-book"></i>
+                            <span id="activeLoansStat">0</span>
+                            <small>Active Loans</small>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-clock"></i>
+                            <span id="overdueStat">0</span>
+                            <small>Overdue</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-menu">
+                    <button class="menu-btn active" data-section="personal">
+                        <i class="fas fa-user"></i> Personal Info
+                    </button>
+                    <button class="menu-btn" data-section="account">
+                        <i class="fas fa-cog"></i> Account Settings
+                    </button>
+                    <button class="menu-btn" data-section="loans">
+                        <i class="fas fa-book"></i> My Loans
+                    </button>
+                    <button class="menu-btn" data-section="history">
+                        <i class="fas fa-history"></i> Activity History
+                    </button>
+                    <button class="menu-btn" data-section="security">
+                        <i class="fas fa-shield-alt"></i> Security
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Content -->
+            <div class="profile-main">
+                <!-- Personal Info Section -->
+                <div class="profile-section active" id="personalSection">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user"></i> Personal Information</h2>
+                        <button class="btn-edit" id="editPersonalBtn">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </div>
+                    
+                    <div class="info-grid" id="personalInfoView">
+                        <!-- Info will be loaded here -->
+                    </div>
+                    
+                    <form class="edit-form" id="personalEditForm" style="display: none;">
+                        <!-- Edit form will be loaded here -->
+                    </form>
+                </div>
+
+                <!-- Account Settings Section -->
+                <div class="profile-section" id="accountSection">
+                    <div class="section-header">
+                        <h2><i class="fas fa-cog"></i> Account Settings</h2>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <i class="fas fa-bell"></i>
+                            <div>
+                                <h3>Notifications</h3>
+                                <p>Manage email and push notifications</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <i class="fas fa-language"></i>
+                            <div>
+                                <h3>Language Preference</h3>
+                                <p>Choose your preferred language</p>
+                            </div>
+                            <select>
+                                <option value="en">English</option>
+                                <option value="am">Amharic</option>
+                                <option value="om">Oromic</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <i class="fas fa-moon"></i>
+                            <div>
+                                <h3>Dark Mode</h3>
+                                <p>Switch between light and dark themes</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Loans Section -->
+                <div class="profile-section" id="loansSection">
+                    <div class="section-header">
+                        <h2><i class="fas fa-book"></i> My Current Loans</h2>
+                        <a href="loans.html?tab=my-loans" class="btn-view-all">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="loans-list" id="myLoansList">
+                        <!-- Loans will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Activity History Section -->
+                <div class="profile-section" id="historySection">
+                    <div class="section-header">
+                        <h2><i class="fas fa-history"></i> Recent Activity</h2>
+                    </div>
+                    
+                    <div class="activity-timeline" id="activityTimeline">
+                        <!-- Activity will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Security Section -->
+                <div class="profile-section" id="securitySection">
+                    <div class="section-header">
+                        <h2><i class="fas fa-shield-alt"></i> Security Settings</h2>
+                    </div>
+                    
+                    <div class="security-actions">
+                        <button class="security-btn" onclick="changePassword()">
+                            <i class="fas fa-key"></i>
+                            <div>
+                                <h3>Change Password</h3>
+                                <p>Update your login password</p>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        
+                        <button class="security-btn" onclick="manageSessions()">
+                            <i class="fas fa-laptop"></i>
+                            <div>
+                                <h3>Manage Sessions</h3>
+                                <p>View and logout active sessions</p>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        
+                        <button class="security-btn" onclick="enable2FA()">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <h3>Two-Factor Authentication</h3>
+                                <p>Add an extra layer of security</p>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        
+                        <button class="security-btn delete" onclick="deleteAccount()">
+                            <i class="fas fa-trash"></i>
+                            <div>
+                                <h3>Delete Account</h3>
+                                <p>Permanently delete your account</p>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Borana University DLMS</h4>
+                <p>Your Personal Library Portal</p>
+            </div>
+            <div class="footer-section">
+                <h4>Account</h4>
+                <a href="#" onclick="changePassword()">Change Password</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="loans.html">My Loans</a>
+                <a href="incidents.html">Report Issues</a>
+            </div>
+            <div class="footer-section">
+                <h4>Need Help?</h4>
+                <p><i class="fas fa-question-circle"></i> Visit Help Center</p>
+                <p><i class="fas fa-envelope"></i> support@bru.edu.et</p>
+                <p><i class="fas fa-phone"></i> +251 46 111 0000</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Profile Management &copy; <span id="currentYear"></span> Borana University</p>
+        </div>
+    </footer>
+
+    <!-- Change Password Modal -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-key"></i> Change Password</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <!-- Form will be loaded by JavaScript -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/profile.js"></script>
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

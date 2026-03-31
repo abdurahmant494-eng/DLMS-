@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Management - DLMS | Borana University</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/loans.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-book"></i>
+                <span>BRU DLMS</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="books.html" class="nav-link"><i class="fas fa-book-open"></i> Books</a>
+                <a href="users.html" class="nav-link"><i class="fas fa-users"></i> Users</a>
+                <a href="incidents.html" class="nav-link"><i class="fas fa-exclamation-triangle"></i> Incidents</a>
+                <a href="loans.html" class="nav-link active"><i class="fas fa-exchange-alt"></i> Loans</a>
+                <div class="user-profile">
+                    <span id="userName">Welcome</span>
+                    <button id="logoutBtn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loans Container -->
+    <main class="loans-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-exchange-alt"></i> Loan Management</h1>
+            <p>Track book borrowing, returns, and overdue items</p>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by book title, user name, or ID...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <button id="checkoutBtn" class="btn-primary">
+                    <i class="fas fa-book-reader"></i> Checkout Book
+                </button>
+                <button id="filterBtn" class="btn-secondary">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+        </div>
+
+        <!-- Loan Statistics -->
+        <div class="loan-stats">
+            <div class="stat-card">
+                <div class="stat-icon active">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Active Loans</h3>
+                    <p id="activeLoansCount">0</p>
+                    <small>Currently borrowed</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon overdue">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Overdue</h3>
+                    <p id="overdueLoansCount">0</p>
+                    <small>Past due date</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon returned">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Returned</h3>
+                    <p id="returnedLoansCount">0</p>
+                    <small>This month</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon fines">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Pending Fines</h3>
+                    <p id="pendingFinesAmount">ETB 0</p>
+                    <small>Unpaid fines</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="loans-tabs">
+            <button class="tab-btn active" data-tab="active">Active Loans</button>
+            <button class="tab-btn" data-tab="overdue">Overdue</button>
+            <button class="tab-btn" data-tab="returned">Recently Returned</button>
+            <button class="tab-btn" data-tab="my-loans">My Loans</button>
+        </div>
+
+        <!-- Filters Panel -->
+        <div class="filters-panel" id="filtersPanel" style="display: none;">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label><i class="fas fa-user"></i> User Type</label>
+                    <select id="userTypeFilter">
+                        <option value="">All Users</option>
+                        <option value="student">Students</option>
+                        <option value="librarian">Librarians</option>
+                        <option value="admin">Admins</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-calendar"></i> Time Period</label>
+                    <select id="timePeriodFilter">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-sort"></i> Sort By</label>
+                    <select id="sortFilter">
+                        <option value="due_date">Due Date</option>
+                        <option value="checkout_date">Checkout Date</option>
+                        <option value="user_name">User Name</option>
+                        <option value="book_title">Book Title</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button id="applyFiltersBtn" class="btn-primary">Apply Filters</button>
+                <button id="clearFiltersBtn" class="btn-secondary">Clear All</button>
+            </div>
+        </div>
+
+        <!-- Loans Table -->
+        <div class="loans-table-container">
+            <table class="loans-table">
+                <thead>
+                    <tr>
+                        <th>Loan ID</th>
+                        <th>Book</th>
+                        <th>User</th>
+                        <th>Checkout Date</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Fine</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="loansTableBody">
+                    <!-- Loans will be loaded here -->
+                    <tr>
+                        <td colspan="8" class="loading-cell">Loading loans...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be generated here -->
+        </div>
+
+        <!-- Loan Rules -->
+        <div class="rules-section">
+            <h3><i class="fas fa-info-circle"></i> Library Loan Rules</h3>
+            <div class="rules-grid">
+                <div class="rule-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <h4>Students</h4>
+                    <p>Max 5 books, 14 days each</p>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-user-tie"></i>
+                    <h4>Staff</h4>
+                    <p>Max 10 books, 30 days each</p>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-redo"></i>
+                    <h4>Renewals</h4>
+                    <p>Max 2 renewals per book</p>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-money-bill"></i>
+                    <h4>Fines</h4>
+                    <p>ETB 0.50 per day overdue</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Borana University DLMS</h4>
+                <p>Efficient Book Circulation System</p>
+            </div>
+            <div class="footer-section">
+                <h4>Loan Services</h4>
+                <a href="#" id="viewMyLoans">My Current Loans</a>
+                <a href="#" id="renewBooks">Renew Books</a>
+                <a href="#" id="payFines">Pay Fines Online</a>
+                <a href="books.html">Browse Available Books</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Circulation Desk</h4>
+                <p><i class="fas fa-phone"></i> +251 46 111 5555</p>
+                <p><i class="fas fa-envelope"></i> circulation@bru.edu.et</p>
+                <p><i class="fas fa-clock"></i> Mon-Sat: 8AM-6PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Loan Management System &copy; <span id="currentYear"></span> Borana University</p>
+        </div>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-book-reader"></i> Checkout Book</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm">
+                    <!-- Form will be loaded by JavaScript -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Return/Renew Modal -->
+    <div class="modal" id="loanActionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="loanActionTitle">Loan Action</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="loanActionBody">
+                <!-- Action form will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/loans.js"></script>
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

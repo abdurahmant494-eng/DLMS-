@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Catalog - DLMS | Borana University</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/books.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation (same as dashboard) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-book"></i>
+                <span>BRU DLMS</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="books.html" class="nav-link active"><i class="fas fa-book-open"></i> Books</a>
+                <a href="users.html" class="nav-link"><i class="fas fa-users"></i> Users</a>
+                <a href="incidents.html" class="nav-link"><i class="fas fa-exclamation-triangle"></i> Incidents</a>
+                <a href="loans.html" class="nav-link"><i class="fas fa-exchange-alt"></i> Loans</a>
+                <div class="user-profile">
+                    <span id="userName">Welcome</span>
+                    <button id="logoutBtn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Books Container -->
+    <main class="books-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-book"></i> Book Catalog</h1>
+            <p>Browse and manage the digital library collection</p>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search books by title, author, subject, or ISBN...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <button id="addBookBtn" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add New Book
+                </button>
+                <button id="filterBtn" class="btn-secondary">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-container" id="filtersContainer" style="display: none;">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label><i class="fas fa-bookmark"></i> Format</label>
+                    <select id="formatFilter">
+                        <option value="">All Formats</option>
+                        <option value="physical">Physical</option>
+                        <option value="digital">Digital</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-tag"></i> Subject</label>
+                    <select id="subjectFilter">
+                        <option value="">All Subjects</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Business">Business</option>
+                        <option value="Literature">Literature</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-language"></i> Language</label>
+                    <select id="languageFilter">
+                        <option value="">All Languages</option>
+                        <option value="English">English</option>
+                        <option value="Amharic">Amharic</option>
+                        <option value="Oromic">Oromic</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-sort-amount-down"></i> Sort By</label>
+                    <select id="sortFilter">
+                        <option value="title">Title (A-Z)</option>
+                        <option value="author">Author</option>
+                        <option value="publication_year">Publication Year</option>
+                        <option value="created_at">Recently Added</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button id="applyFiltersBtn" class="btn-primary">Apply Filters</button>
+                <button id="clearFiltersBtn" class="btn-secondary">Clear All</button>
+            </div>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="books-grid" id="booksGrid">
+            <!-- Books will be loaded here -->
+            <div class="loading">Loading books...</div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be generated here -->
+        </div>
+
+        <!-- Book Statistics -->
+        <div class="stats-section">
+            <h2><i class="fas fa-chart-pie"></i> Collection Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Books</h3>
+                        <p id="totalBooksCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Digital Books</h3>
+                        <p id="digitalBooksCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Languages</h3>
+                        <p id="languagesCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Subjects</h3>
+                        <p id="subjectsCount">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Borana University DLMS</h4>
+                <p>Access Knowledge Anytime, Anywhere</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="../index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="books.html">Book Catalog</a>
+                <a href="login.html">Student Portal</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Library</h4>
+                <p><i class="fas fa-envelope"></i> library@borana.edu.et</p>
+                <p><i class="fas fa-phone"></i> +251 46 111 1111</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Digital Library Management System &copy; <span id="currentYear"></span> Borana University</p>
+        </div>
+    </footer>
+
+    <!-- Book Details Modal -->
+    <div class="modal" id="bookModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Book Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Book details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+  <!-- Add Book Modal -->
+<div class="modal" id="addBookModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-plus"></i> Add New Book</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addBookForm">
+                <!-- Row 1 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookTitle"><i class="fas fa-heading"></i> Title *</label>
+                        <input type="text" id="bookTitle" name="title" required placeholder="Enter book title">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor"><i class="fas fa-user-edit"></i> Author *</label>
+                        <input type="text" id="bookAuthor" name="author" required placeholder="Enter author name">
+                    </div>
+                </div>
+                
+                <!-- Row 2 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookISBN"><i class="fas fa-hashtag"></i> ISBN</label>
+                        <input type="text" id="bookISBN" name="isbn" placeholder="e.g., 978-3-16-148410-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookSubject"><i class="fas fa-tag"></i> Subject</label>
+                        <input type="text" id="bookSubject" name="subject" placeholder="e.g., Computer Science">
+                    </div>
+                </div>
+                
+                <!-- Row 3 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookPublisher"><i class="fas fa-building"></i> Publisher</label>
+                        <input type="text" id="bookPublisher" name="publisher" placeholder="Enter publisher">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookYear"><i class="fas fa-calendar"></i> Publication Year</label>
+                        <input type="number" id="bookYear" name="publication_year" min="1900" max="2026" placeholder="2024">
+                    </div>
+                </div>
+                
+                <!-- Row 4 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookLanguage"><i class="fas fa-language"></i> Language</label>
+                        <select id="bookLanguage" name="language">
+                            <option value="English">English</option>
+                            <option value="Amharic">Amharic</option>
+                            <option value="Oromic">Oromic</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookFormat"><i class="fas fa-book"></i> Format</label>
+                        <select id="bookFormat" name="format">
+                            <option value="physical">Physical Book</option>
+                            <option value="digital">Digital/E-book</option>
+                            <option value="both">Both Formats</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Row 5 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookCopies"><i class="fas fa-copy"></i> Total Copies</label>
+                        <input type="number" id="bookCopies" name="total_copies" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookLocation"><i class="fas fa-map-marker-alt"></i> Shelf Location</label>
+                        <input type="text" id="bookLocation" name="shelf_location" placeholder="e.g., Section A, Shelf 3">
+                    </div>
+                </div>
+                
+                <!-- Row 6 -->
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="bookDescription"><i class="fas fa-align-left"></i> Description</label>
+                        <textarea id="bookDescription" name="description" rows="4" placeholder="Enter book description..."></textarea>
+                    </div>
+                </div>
+                
+                <!-- File Upload Section -->
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="bookCover"><i class="fas fa-image"></i> Cover Image</label>
+                        <input type="file" id="bookCover" name="cover_image" accept="image/*">
+                        <small>Optional: Upload book cover (JPG, PNG, max 5MB)</small>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="bookFile"><i class="fas fa-file-pdf"></i> Digital File</label>
+                        <input type="file" id="bookFile" name="digital_file" accept=".pdf,.doc,.docx,.epub">
+                        <small>Optional: Upload digital version (PDF, DOC, EPUB)</small>
+                    </div>
+                </div>
+                
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-plus"></i> Add Book
+                    </button>
+                    <button type="button" class="btn-secondary close-modal">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+                    <!-- More fields would go here -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Add Book</button>
+                        <button type="button" class="btn-secondary close-modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/books.js"></script>
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

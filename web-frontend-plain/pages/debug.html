@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .debug-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .debug-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+        
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow: auto;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>Authentication Debugger</h1>
+        
+        <div class="debug-section">
+            <h2>Local Storage</h2>
+            <div class="debug-item" id="tokenStatus">
+                Checking token...
+            </div>
+            <div class="debug-item" id="userStatus">
+                Checking user data...
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>API Instance</h2>
+            <div class="debug-item" id="apiInstanceStatus">
+                Checking API instance...
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Backend Connection</h2>
+            <div class="debug-item" id="backendStatus">
+                Checking backend...
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Actions</h2>
+            <button onclick="clearStorage()">Clear Local Storage</button>
+            <button onclick="testLogin()">Test Login</button>
+            <button onclick="testApi()">Test API Call</button>
+            <button onclick="location.reload()">Refresh</button>
+            <button onclick="window.location.href='login.html'">Go to Login</button>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Raw Data</h2>
+            <pre id="rawData">Loading...</pre>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        // Check localStorage
+        function checkLocalStorage() {
+            const token = localStorage.getItem('dlms_token');
+            const user = localStorage.getItem('dlms_user');
+            
+            const tokenEl = document.getElementById('tokenStatus');
+            const userEl = document.getElementById('userStatus');
+            
+            if (token) {
+                tokenEl.innerHTML = `<span class="success">✓ Token Found:</span> ${token.substring(0, 30)}...`;
+            } else {
+                tokenEl.innerHTML = `<span class="error">✗ No Token Found</span>`;
+            }
+            
+            if (user) {
+                try {
+                    const userObj = JSON.parse(user);
+                    userEl.innerHTML = `<span class="success">✓ User Found:</span> ${userObj.first_name} ${userObj.last_name} (${userObj.role})`;
+                } catch (e) {
+                    userEl.innerHTML = `<span class="warning">⚠ User data corrupted</span>`;
+                }
+            } else {
+                userEl.innerHTML = `<span class="error">✗ No User Data</span>`;
+            }
+        }
+        
+        // Check API instance
+        function checkApiInstance() {
+            const apiEl = document.getElementById('apiInstanceStatus');
+            
+            if (window.dlmsAPI) {
+                const hasToken = window.dlmsAPI.token ? 'Yes' : 'No';
+                apiEl.innerHTML = `<span class="success">✓ API Instance Loaded</span><br>
+                                   Token in instance: ${hasToken}<br>
+                                   Instance type: ${typeof window.dlmsAPI}`;
+            } else {
+                apiEl.innerHTML = `<span class="error">✗ API Instance Not Found</span>`;
+            }
+        }
+        
+        // Check backend connection
+        async function checkBackend() {
+            const backendEl = document.getElementById('backendStatus');
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/health');
+                if (response.ok) {
+                    backendEl.innerHTML = `<span class="success">✓ Backend Connected</span><br>
+                                           Status: Online<br>
+                                           URL: http://localhost:5000`;
+                } else {
+                    backendEl.innerHTML = `<span class="error">✗ Backend Error</span><br>
+                                           Status: ${response.status}`;
+                }
+            } catch (error) {
+                backendEl.innerHTML = `<span class="error">✗ Backend Unreachable</span><br>
+                                       Error: ${error.message}<br>
+                                       Make sure backend is running: <code>npm start</code> in backend folder`;
+            }
+        }
+        
+        // Show raw data
+        function showRawData() {
+            const rawEl = document.getElementById('rawData');
+            const data = {
+                localStorage: {
+                    dlms_token: localStorage.getItem('dlms_token'),
+                    dlms_user: localStorage.getItem('dlms_user')
+                },
+                apiInstance: {
+                    exists: !!window.dlmsAPI,
+                    token: window.dlmsAPI ? window.dlmsAPI.token : 'No API instance',
+                    constructor: window.dlmsAPI ? window.dlmsAPI.constructor.name : 'N/A'
+                },
+                location: {
+                    hostname: window.location.hostname,
+                    port: window.location.port,
+                    protocol: window.location.protocol,
+                    href: window.location.href
+                }
+            };
+            
+            rawEl.textContent = JSON.stringify(data, null, 2);
+        }
+        
+        // Clear storage
+        function clearStorage() {
+            localStorage.removeItem('dlms_token');
+            localStorage.removeItem('dlms_user');
+            if (window.dlmsAPI) {
+                window.dlmsAPI.token = null;
+            }
+            alert('Local storage cleared!');
+            location.reload();
+        }
+        
+        // Test login
+        async function testLogin() {
+            try {
+                const response = await window.dlmsAPI.login('admin@dlms.com', 'Admin123');
+                if (response && response.token) {
+                    alert('Test login successful! Token received.');
+                    window.dlmsAPI.setToken(response.token);
+                    localStorage.setItem('dlms_user', JSON.stringify(response.user));
+                    location.reload();
+                }
+            } catch (error) {
+                alert('Test login failed: ' + error.message);
+            }
+        }
+        
+        // Test API call
+        async function testApi() {
+            if (!window.dlmsAPI.token) {
+                alert('No token available. Please login first.');
+                return;
+            }
+            
+            try {
+                const response = await window.dlmsAPI.request('/auth/profile');
+                alert('API call successful! User: ' + JSON.stringify(response.user));
+            } catch (error) {
+                alert('API call failed: ' + error.message);
+            }
+        }
+        
+        // Initialize debugger
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLocalStorage();
+            checkApiInstance();
+            checkBackend();
+            showRawData();
+        });
+    </script>
+</body>
+</html>

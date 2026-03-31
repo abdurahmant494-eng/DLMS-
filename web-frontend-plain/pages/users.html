@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - DLMS | Borana University</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/users.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-book"></i>
+                <span>BRU DLMS</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="books.html" class="nav-link"><i class="fas fa-book-open"></i> Books</a>
+                <a href="users.html" class="nav-link active"><i class="fas fa-users"></i> Users</a>
+                <a href="incidents.html" class="nav-link"><i class="fas fa-exclamation-triangle"></i> Incidents</a>
+                <a href="loans.html" class="nav-link"><i class="fas fa-exchange-alt"></i> Loans</a>
+                <div class="user-profile">
+                    <span id="userName">Welcome</span>
+                    <button id="logoutBtn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Users Container -->
+    <main class="users-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-users"></i> User Management</h1>
+            <p>Manage students, librarians, and administrators</p>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search users by name, email, or ID...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <button id="addUserBtn" class="btn-primary">
+                    <i class="fas fa-user-plus"></i> Add User
+                </button>
+                <button id="filterBtn" class="btn-secondary">
+                    <i class="fas fa-filter"></i> Filter by Role
+                </button>
+            </div>
+        </div>
+
+        <!-- User Statistics -->
+        <div class="user-stats">
+            <div class="stat-card">
+                <div class="stat-icon students">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Students</h3>
+                    <p id="studentsCount">0</p>
+                    <small>Active learners</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon librarians">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Librarians</h3>
+                    <p id="librariansCount">0</p>
+                    <small>Library staff</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon admins">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Admins</h3>
+                    <p id="adminsCount">0</p>
+                    <small>System administrators</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon total">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Users</h3>
+                    <p id="totalUsersCount">0</p>
+                    <small>All registered users</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="users-table-container">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Users will be loaded here -->
+                    <tr>
+                        <td colspan="7" class="loading-cell">Loading users...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be generated here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Borana University DLMS</h4>
+                <p>Managing Academic Community</p>
+            </div>
+            <div class="footer-section">
+                <h4>User Resources</h4>
+                <a href="profile.html">My Profile</a>
+                <a href="login.html">Student Login</a>
+                <a href="dashboard.html">Staff Portal</a>
+                <a href="incidents.html">Report Issues</a>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <p><i class="fas fa-envelope"></i> support@bru.edu.et</p>
+                <p><i class="fas fa-phone"></i> +251 46 111 2222</p>
+                <p><i class="fas fa-clock"></i> Mon-Fri: 8AM-5PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>User Management System &copy; <span id="currentYear"></span> Borana University</p>
+        </div>
+    </footer>
+
+    <!-- User Details Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>User Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="userModalBody">
+                <!-- User details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New User</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <!-- Form will be loaded by JavaScript -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/users.js"></script>
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

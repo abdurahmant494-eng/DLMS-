@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Library Management System - Borana University</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* University Theme Colors */
+        :root {
+            --primary-color: #1a365d; /* Borana Blue */
+            --secondary-color: #d4af37; /* Gold accent */
+            --accent-color: #2d3748;
+            --light-bg: #f7fafc;
+        }
+        
+        .university-header {
+            background: linear-gradient(rgba(26, 54, 93, 0.9), rgba(26, 54, 93, 0.9));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .university-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .university-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .campus-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .campus-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .campus-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .campus-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .campus-image-caption {
+            padding: 15px;
+            background: white;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .project-team {
+            background: var(--light-bg);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .feature-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .system-demo {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 50px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- University Header -->
+    <header class="university-header">
+        <div class="container">
+            <div class="university-logo">
+                <!-- Place university logo here -->
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                    <i class="fas fa-university" style="font-size: 4rem; color: var(--primary-color);"></i>
+                </div>
+            </div>
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Borana University</h1>
+            <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--secondary-color);">
+                College of Engineering and Technology
+            </h2>
+            <h3 style="font-size: 1.5rem; opacity: 0.9;">Digital Library Management System</h3>
+            <p style="margin-top: 20px; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                A Modern Solution for Academic Resource Management
+            </p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar" style="background: var(--primary-color);">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-book"></i>
+                <span>BRU DLMS</span>
+            </div>
+            <div class="nav-links">
+                <a href="./index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+                <a href="./pages/login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="./pages/dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="./pages/books.html" class="nav-link"><i class="fas fa-book-open"></i> Books</a>
+                <a href="./pages/users.html" class="nav-link"><i class="fas fa-users"></i> Users</a>
+                <a href="./pages/incidents.html" class="nav-link"><i class="fas fa-exclamation-triangle"></i> Incidents</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Project Introduction -->
+        <section class="project-intro">
+            <h2 style="color: var(--primary-color); margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-graduation-cap"></i> Academic Project Overview
+            </h2>
+            <div style="background: var(--light-bg); padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #4a5568;">
+                    This Digital Library Management System (DLMS) is developed as part of the Software Engineering course 
+                    (CoSc3061) at Borana University. The system aims to modernize library services, providing efficient 
+                    management of academic resources for students, faculty, and library staff.
+                </p>
+                <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+                            <i class="fas fa-calendar-alt"></i> Course Information
+                        </h4>
+                        <p><strong>Course:</strong> Software Engineering (CoSc3061)</p>
+                        <p><strong>Instructor:</strong> Hadho D. (MSc in Software Engineering)</p>
+                        <p><strong>Department:</strong> Computer Science</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+                            <i class="fas fa-calendar-check"></i> Project Timeline
+                        </h4>
+                        <p><strong>Start Date:</strong> December 2025</p>
+                        <p><strong>Submission Date:</strong> April 2018 EC</p>
+                        <p><strong>Duration:</strong> 4 Months</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Campus Showcase -->
+        <section class="campus-showcase">
+            <h2 style="color: var(--primary-color); margin-bottom: 30px; text-align: center;">
+                <i class="fas fa-university"></i> Borana University Campus
+            </h2>
+            <div class="campus-images">
+                <div class="campus-image">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                         display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="campus-image-caption">Main Administration Building</div>
+                </div>
+                <div class="campus-image">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
+                         display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <div class="campus-image-caption">University Library</div>
+                </div>
+                <div class="campus-image">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
+                         display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="campus-image-caption">Computer Science Department</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Team -->
+        <section class="project-team">
+            <h2 style="color: var(--primary-color); margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-users"></i> Development Team
+            </h2>
+            <p style="text-align: center; color: #4a5568; max-width: 800px; margin: 0 auto 30px;">
+                This project is developed by 5th year Computer Science students under the guidance of the Department 
+                of Computer Science, College of Engineering and Technology.
+            </p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">CN</div>
+                    <h3>Chala Negesa</h3>
+                    <p>ID: BRU/R/040/16</p>
+                    <p style="color: var(--secondary-color); font-weight: 600;">Team Leader</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">GB</div>
+                    <h3>Getachew Birhanu</h3>
+                    <p>ID: BRU/R/078/16</p>
+                    <p>Backend Developer</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">TA</div>
+                    <h3>Tahir Abduro</h3>
+                    <p>ID: BRU/R/152/16</p>
+                    <p>Frontend Developer</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">EB</div>
+                    <h3>Embakom Belachew</h3>
+                    <p>ID: BRU/R/054/16</p>
+                    <p>Database Designer</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">YD</div>
+                    <h3>Yohannes Demmirew</h3>
+                    <p>ID: BRU/R/179/16</p>
+                    <p>Documentation & Testing</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Features -->
+        <section class="system-features">
+            <h2 style="color: var(--primary-color); margin-bottom: 30px; text-align: center;">
+                <i class="fas fa-star"></i> System Features
+            </h2>
+            
+            <div class="feature-showcase">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Book Management</h3>
+                    <p>Complete catalog system with search, filtering, and digital access</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>User Management</h3>
+                    <p>Role-based access for students, librarians, and administrators</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>Loan System</h3>
+                    <p>Automated borrowing, returns, renewals, and fine calculation</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Incident Reporting</h3>
+                    <p>Track and manage library facility issues and disturbances</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Demo Section -->
+        <section class="system-demo">
+            <h2 style="font-size: 2rem; margin-bottom: 20px;">Live System Demo</h2>
+            <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto 30px; opacity: 0.9;">
+                Experience the fully functional system. The backend is powered by Node.js/Express with MySQL database, 
+                and the frontend uses modern HTML5, CSS3, and JavaScript.
+            </p>
+            
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="./pages/login.html" class="btn" style="background: var(--secondary-color); color: #000; padding: 15px 30px; font-size: 1.1rem;">
+                    <i class="fas fa-play-circle"></i> Launch Demo
+                </a>
+                <button onclick="checkSystemStatus()" class="btn" style="background: white; color: var(--primary-color); padding: 15px 30px; font-size: 1.1rem;">
+                    <i class="fas fa-server"></i> Check System Status
+                </button>
+            </div>
+            
+            <div id="systemStatus" style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; display: none;">
+                <!-- Status will be shown here -->
+            </div>
+        </section>
+
+        <!-- Technology Stack -->
+        <section style="margin: 50px 0;">
+            <h2 style="color: var(--primary-color); margin-bottom: 30px; text-align: center;">
+                <i class="fas fa-code"></i> Technology Stack
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center;">
+                <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">
+                    <i class="fab fa-node-js" style="font-size: 3rem; color: #68a063;"></i>
+                    <h4>Node.js</h4>
+                    <p>Backend Runtime</p>
+                </div>
+                <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">
+                    <i class="fas fa-database" style="font-size: 3rem; color: #00758f;"></i>
+                    <h4>MySQL</h4>
+                    <p>Database</p>
+                </div>
+                <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">
+                    <i class="fab fa-js" style="font-size: 3rem; color: #f7df1e;"></i>
+                    <h4>JavaScript</h4>
+                    <p>Frontend</p>
+                </div>
+                <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">
+                    <i class="fas fa-shield-alt" style="font-size: 3rem; color: #e74c3c;"></i>
+                    <h4>JWT</h4>
+                    <p>Authentication</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--primary-color); color: white; margin-top: 50px;">
+        <div class="footer-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                <div>
+                    <h4 style="margin-bottom: 15px;">Borana University</h4>
+                    <p>College of Engineering and Technology</p>
+                    <p>Department of Computer Science</p>
+                    <p>Yabelo, Ethiopia</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 15px;">Project Information</h4>
+                    <p>Course: Software Engineering (CoSc3061)</p>
+                    <p>Instructor: Hadho D.</p>
+                    <p>Submission: April 2018 EC</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 15px;">Contact</h4>
+                    <p><i class="fas fa-envelope"></i> csdepartment@borana.edu.et</p>
+                    <p><i class="fas fa-phone"></i> +251 46 111 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Borana University Campus</p>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center;">
+                <p>Digital Library Management System &copy; <span id="currentYear"></span> Borana University</p>
+                <p>Academic Project - Software Engineering Course</p>
+                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                    This system is developed for academic purposes as part of the Software Engineering curriculum
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // System status check function
+        function checkSystemStatus() {
+            const statusDiv = document.getElementById('systemStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `
+                <div style="text-align: center;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                    <p>Checking system components...</p>
+                </div>
+            `;
+            
+            // Check backend
+            fetch('http://localhost:5000/api/health')
+                .then(response => response.json())
+                .then(data => {
+                    let statusHTML = `
+                        <h3 style="margin-bottom: 20px;"><i class="fas fa-check-circle"></i> System Status</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                <p><strong>Backend API:</strong></p>
+                                <p><span style="color: #2ecc71;">●</span> Online</p>
+                                <small>Port: 5000</small>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                <p><strong>Frontend:</strong></p>
+                                <p><span style="color: #2ecc71;">●</span> Online</p>
+                                <small>Port: 3000</small>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                <p><strong>Database:</strong></p>
+                                <p><span style="color: #2ecc71;">●</span> Connected</p>
+                                <small>MySQL</small>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                            <p><strong>System Ready:</strong> All components are operational</p>
+                            <a href="./pages/login.html" style="display: inline-block; margin-top: 10px; padding: 10px 20px; 
+                               background: var(--secondary-color); color: #000; text-decoration: none; border-radius: 5px;">
+                               <i class="fas fa-rocket"></i> Launch System
+                            </a>
+                        </div>
+                    `;
+                    statusDiv.innerHTML = statusHTML;
+                })
+                .catch(error => {
+                    statusDiv.innerHTML = `
+                        <div style="text-align: center; color: #f8d7da;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem;"></i>
+                            <h3>System Status Check Failed</h3>
+                            <p>Backend server is not running. Please start the backend:</p>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left;">
+                                <code style="display: block; margin-bottom: 10px;">cd backend</code>
+                                <code style="display: block; margin-bottom: 10px;">npm install</code>
+                                <code style="display: block;">npm start</code>
+                            </div>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Auto-check system status on page load
+        window.addEventListener('load', function() {
+            setTimeout(checkSystemStatus, 1000);
+        });
+    </script>
+</body>
+</html>

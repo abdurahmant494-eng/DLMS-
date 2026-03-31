@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Borana University DLMS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #d4af37;
+        }
+        
+        .login-container {
+            background: linear-gradient(rgba(26, 54, 93, 0.9), rgba(26, 54, 93, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a365d"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23d4af37" stroke-width="1" opacity="0.1"/></svg>');
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+        
+        .university-badge {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+        
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .role-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .role-btn:hover {
+            border-color: var(--secondary-color);
+            background: #fff;
+        }
+        
+        .role-btn.active {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: #000;
+            font-weight: 600;
+        }
+        
+        .role-btn i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .test-credentials {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .demo-video {
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <main class="login-container">
+        <div class="login-card" style="max-width: 800px; overflow: hidden;">
+            <!-- Header with University Info -->
+            <div class="login-header">
+                <div class="university-badge">
+                    <i class="fas fa-university"></i>
+                </div>
+                <h1 style="margin-bottom: 5px;">Borana University</h1>
+                <p style="opacity: 0.9; margin-bottom: 10px;">Digital Library Management System</p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">
+                    College of Engineering and Technology • Department of Computer Science
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 30px;">
+                <!-- Login Form -->
+                <div>
+                    <h2 style="color: var(--primary-color); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-sign-in-alt"></i> System Login
+                    </h2>
+                    
+                    <form id="loginForm" class="login-form">
+                        <!-- Role Selection -->
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 10px; color: var(--primary-color); font-weight: 600;">
+                                <i class="fas fa-user-tag"></i> Select Role
+                            </label>
+                            <div class="role-selector">
+                                <div class="role-btn active" data-role="student" onclick="selectRole('student')">
+                                    <i class="fas fa-user-graduate"></i>
+                                    Student
+                                </div>
+                                <div class="role-btn" data-role="librarian" onclick="selectRole('librarian')">
+                                    <i class="fas fa-user-tie"></i>
+                                    Librarian
+                                </div>
+                                <div class="role-btn" data-role="admin" onclick="selectRole('admin')">
+                                    <i class="fas fa-user-shield"></i>
+                                    Admin
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> University Email
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email"
+                                placeholder="username@bru.edu.et"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-lock"></i> Password
+                            </label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="remember">
+                                <span>Remember this device</span>
+                            </label>
+                            <a href="#" class="forgot-link" onclick="showForgotPassword()">
+                                <i class="fas fa-key"></i> Forgot password?
+                            </a>
+                        </div>
+
+                        <button type="submit" class="btn-login" id="loginBtn" style="background: var(--primary-color);">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login to System</span>
+                        </button>
+
+                        <div class="login-alert" id="loginAlert" style="display: none;">
+                            <!-- Alert messages will appear here -->
+                        </div>
+                    </form>
+                    
+                    <!-- Test Credentials -->
+                    <div class="test-credentials">
+                        <h4 style="margin-bottom: 10px; color: #1976d2;">
+                            <i class="fas fa-vial"></i> Test Credentials
+                        </h4>
+                        <div id="studentCreds" style="display: block;">
+                            <p><strong>Student:</strong> student@bru.edu.et</p>
+                            <p><strong>Password:</strong> Student123</p>
+                        </div>
+                        <div id="librarianCreds" style="display: none;">
+                            <p><strong>Librarian:</strong> librarian@bru.edu.et</p>
+                            <p><strong>Password:</strong> Librarian123</p>
+                        </div>
+                        <div id="adminCreds" style="display: none;">
+                            <p><strong>Administrator:</strong> admin@dlms.com</p>
+                            <p><strong>Password:</strong> Admin123</p>
+                        </div>
+                    </div>
+
+                    <!-- Registration Link -->
+                    <div style="text-align: center; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+                            <i class="fas fa-user-plus"></i> New User?
+                        </h4>
+                        <p style="margin-bottom: 10px; color: #666;">Don't have an account yet?</p>
+                        <a href="register.html" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- System Information -->
+                <div>
+                    <h2 style="color: var(--primary-color); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-info-circle"></i> System Information
+                    </h2>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">
+                            <i class="fas fa-project-diagram"></i> Project Details
+                        </h4>
+                        <p><strong>Course:</strong> Software Engineering (CoSc3061)</p>
+                        <p><strong>Instructor:</strong> Hadho D. (MSc in Software Engineering)</p>
+                        <p><strong>Team:</strong> 5 Computer Science Students</p>
+                        <p><strong>Submission:</strong> April 2018 EC</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">
+                            <i class="fas fa-cogs"></i> System Features
+                        </h4>
+                        <ul style="padding-left: 20px; color: #555;">
+                            <li>Secure JWT Authentication</li>
+                            <li>Role-based Access Control</li>
+                            <li>Real-time Database Operations</li>
+                            <li>Email Notifications</li>
+                            <li>Responsive Design</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Demo Video Placeholder -->
+                    <div class="demo-video">
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div style="padding: 15px; background: white; text-align: center;">
+                            <p style="margin: 0; color: var(--primary-color); font-weight: 600;">
+                                <i class="fas fa-video"></i> System Demonstration
+                            </p>
+                            <p style="margin: 5px 0 0; font-size: 0.9rem; color: #666;">
+                                Click to watch system features overview
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="background: #f8f9fa; padding: 20px; border-top: 1px solid #dee2e6; text-align: center;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div style="text-align: left;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                            <i class="fas fa-server"></i> Backend: <code>localhost:5000</code>
+                        </p>
+                        <p style="margin: 5px 0 0; font-size: 0.9rem; color: #666;">
+                            <i class="fas fa-database"></i> Database: MySQL
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <a href="../index.html" style="color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-arrow-left"></i> Back to Home
+                        </a>
+                    </div>
+                    
+                    <div style="text-align: right;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                            <i class="fas fa-code"></i> Version 1.0.0
+                        </p>
+                        <p style="margin: 5px 0 0; font-size: 0.9rem; color: #666;">
+                            &copy; <span id="currentYear"></span> Borana University
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Role selection
+        let selectedRole = 'student';
+        
+        function selectRole(role) {
+            selectedRole = role;
+            
+            // Update UI
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-role="${role}"]`).classList.add('active');
+            
+            // Update credentials display
+            document.getElementById('studentCreds').style.display = role === 'student' ? 'block' : 'none';
+            document.getElementById('librarianCreds').style.display = role === 'librarian' ? 'block' : 'none';
+            document.getElementById('adminCreds').style.display = role === 'admin' ? 'block' : 'none';
+            
+            // Auto-fill email based on role
+            const emailField = document.getElementById('email');
+            switch(role) {
+                case 'student':
+                    emailField.value = 'student@bru.edu.et';
+                    emailField.placeholder = 'student@bru.edu.et';
+                    break;
+                case 'librarian':
+                    emailField.value = 'librarian@bru.edu.et';
+                    emailField.placeholder = 'librarian@bru.edu.et';
+                    break;
+                case 'admin':
+                    emailField.value = 'admin@dlms.com';
+                    emailField.placeholder = 'admin@dlms.com';
+                    break;
+            }
+        }
+        
+        // Auto-select student role on load
+        window.addEventListener('load', function() {
+            selectRole('student');
+            document.getElementById('password').value = 'Student123';
+        });
+        
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const alertDiv = document.getElementById('loginAlert');
+            
+            // Clear previous alerts
+            alertDiv.style.display = 'none';
+            alertDiv.className = 'login-alert';
+            alertDiv.innerHTML = '';
+            
+            // Validate inputs
+            if (!email || !password) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+            
+            try {
+                // Check backend first
+                const healthCheck = await fetch('http://localhost:5000/api/health');
+                if (!healthCheck.ok) {
+                    throw new Error('Backend server is not running. Please start the server first.');
+                }
+                
+                // Try to login
+                const response = await window.dlmsAPI.login(email, password);
+                
+                if (response && response.token) {
+                    showAlert(`Login successful! Welcome ${response.user.first_name}`, 'success');
+                    
+                    // Save token to API instance
+                    window.dlmsAPI.setToken(response.token);
+                    
+                    // Also save user info for debugging
+                    localStorage.setItem('dlms_user', JSON.stringify(response.user));
+                    console.log('User saved:', response.user);
+                    
+                    // Show role-specific message
+                    let roleMessage = '';
+                    switch(response.user.role) {
+                        case 'student':
+                            roleMessage = 'You can now browse books, borrow items, and report incidents.';
+                            break;
+                        case 'librarian':
+                            roleMessage = 'You can manage books, users, loans, and handle incidents.';
+                            break;
+                        case 'admin':
+                            roleMessage = 'You have full system access including user management and system configuration.';
+                            break;
+                    }
+                    
+                    // Update alert with role info
+                    alertDiv.innerHTML += `<br><small>${roleMessage}</small>`;
+                    
+                    // Redirect to dashboard immediately
+                    window.location.href = 'dashboard.html';
+                } else {
+                    showAlert('Login failed. Please check credentials.', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                if (error.message.includes('Backend server')) {
+                    showAlert(error.message, 'error');
+                    alertDiv.innerHTML += `
+                        <br><br>
+                        <div style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 5px; font-size: 0.9rem;">
+                            <strong>To start the backend:</strong>
+                            <div style="margin-top: 5px;">
+                                <code style="display: block;">cd backend</code>
+                                <code style="display: block;">npm start</code>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    showAlert('Login failed: ' + error.message, 'error');
+                }
+            } finally {
+                // Reset button
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Login to System</span>';
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('loginAlert');
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            alertDiv.className = `login-alert ${type}`;
+            alertDiv.style.display = 'flex';
+        }
+        
+        function showForgotPassword() {
+            const email = document.getElementById('email').value;
+            if (email) {
+                showAlert(`Password reset link would be sent to: ${email}`, 'info');
+                alertDiv.innerHTML += `
+                    <br><small>(In production, this would trigger an email with reset instructions)</small>
+                `;
+            } else {
+                showAlert('Please enter your email address first', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
